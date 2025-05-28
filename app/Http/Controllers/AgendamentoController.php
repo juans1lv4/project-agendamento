@@ -39,8 +39,9 @@ class AgendamentoController extends Controller
             }
             $inicio->addMinutes(30);
         }
+        
         return response()->json($horariosDisponiveis);
-        return view('horarios');
+        
     }
 
 
@@ -81,7 +82,9 @@ class AgendamentoController extends Controller
             'name_client' => $dados['name_client'],
             'phone_client' => $dados['phone_client'],
         ]);
-        return response()->json($agendamento, 201);
+        //return response()->json($agendamento, 201);
+        Agendamento::create($dados);
+        return response()->json(['message' => 'Agendamento criado!'], 201);
     }
 
     /**
@@ -116,18 +119,8 @@ class AgendamentoController extends Controller
         $agendamento = Agendamento::findOrFail($id);
         $agendamento->update(['status' => 'cancelado']);
 
+        return response()->json(['message' => 'Cancelado!'], 201);
         return response()->noContent();
     }
-
-    public function horariosDisponiveisView(Request $request)
-    {
-        $horarios = [];
-
-        if ($request->has('data')) {
-            $apiResponse = $this->horariosDisponiveis($request); // Chama o método API existente
-            $horarios = json_decode($apiResponse->content(), true); // Converte JSON para array
-        }
-
-        return view('horarios', ['horarios' => $horarios]);
-    }
+    
 }

@@ -13,3 +13,5 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/horarios-disponiveis', [AgendamentoController::class, 'horariosDisponiveis']);
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
+Route::get('/index', [AgendamentoController::class, 'index']);
+Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'destroy']);
