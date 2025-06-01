@@ -18,6 +18,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/horarios-disponiveis', [AgendamentoController::class, 'horariosDisponiveisView']);
+Route::get('/index', [AgendamentoController::class, 'index']);
+
+Route::get('/horarios-disponiveis', [AgendamentoController::class, 'horariosDisponiveis']);
+
+
+// Route::get('/test-token', function() {
+//     $user = App\Models\User::first();
+//     try {
+//         $token = $user->createToken('test-token')->plainTextToken;
+//         return "Token criado com sucesso: ".$token;
+//     } catch (\Exception $e) {
+//         return "Erro: ".$e->getMessage();
+//     }
+// });
 
 require __DIR__.'/auth.php';

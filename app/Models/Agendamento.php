@@ -16,12 +16,10 @@ class Agendamento extends Model
         'status',
     ];
 
-    public static function rules()
+     public function user()
     {
-        return [
-            'data_horario' => 'required|date|after:now',
-            'name_client' => 'required|string|max:100',
-            'phone_client' => 'required|string|min:10|max:20',
-        ];
+        return $this->belongsTo(User::class);
     }
+
+   
 }
