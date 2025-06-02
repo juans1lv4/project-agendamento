@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
 use Illuminate\Http\Request;
-use App\Models\User;  
-use Illuminate\Support\Facades\Auth;
+
 
 class AdminController extends Controller
 {
@@ -14,9 +13,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Agendamento::with('user:id,name')
+        $agendamentos = Agendamento::select('id', 'data_horario', 'name_client', 'phone_client')
+        ->with('user:id')
         ->orderBy('data_horario', 'desc')
         ->get();
+
+        return response()->json($agendamentos);
     }
 
     /**

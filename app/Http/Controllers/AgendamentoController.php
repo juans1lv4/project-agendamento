@@ -37,6 +37,7 @@ class AgendamentoController extends Controller
         return response()->json($horariosDisponiveis);
     }
 
+    //utilizei apenas para testar o navegador
     public function index()
     {
         return Agendamento::orderBy('data_horario')->get();
@@ -54,12 +55,14 @@ class AgendamentoController extends Controller
 
         if ($existente) {
             return response()->json(['message' => 'Horário já ocupado'], 409);
+           
         }
 
         $agendamento = Agendamento::create([
             'data_horario' => $dataHora,
             'name_client' => $dados['name_client'],
             'phone_client' => $dados['phone_client'],
+            'status' => 'confirmado',
             
         ]);
 
@@ -85,7 +88,8 @@ class AgendamentoController extends Controller
     {
         $agendamento = Agendamento::findOrFail($id);
         $agendamento->update(['status' => 'cancelado']);
+        $agendamento->save();
 
-        return response()->json(['message' => 'Cancelado!'], 200);
+        return response()->json(['message' => 'Cancelado!', $agendamento],200);
     }
 }
